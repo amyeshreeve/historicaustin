@@ -1,0 +1,25 @@
+import os
+import pandas as pd
+
+sheet = pd.read_excel('TAVH-AAA-20210312-xlsx-csv.xlsx')
+sheet2 = sheet[sheet.City=='Austin']
+sheet3 = sheet2.dropna(subset=['address'])
+sheet3.to_csv('AddressedAustinPhotos.csv')
+
+df = pd.read_excel('TAVH_VRC_20210312-xlsx.xlsx')
+df2 = df[df.City=='Austin']
+df3 = df2.dropna(subset=['address'])
+df3.to_csv('AllAustinPhotos2.csv')
+
+sheet = pd.read_csv('AddressedAustinPhotos.csv')
+df = pd.read_csv('AllAustinPhotos2.csv')
+
+df = df.rename(columns={'description: content description':'description', 
+'description: physical description':'physical description', 
+'Subject:':'Subject (topic) 1',
+'Subject/Keyword':'Subject (topic) 2,'})
+
+frames = [df, sheet]
+result = pd.concat(frames)
+del result['Unnamed: 0']
+result.to_csv('Combined.csv')

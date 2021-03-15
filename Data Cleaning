@@ -22,4 +22,5 @@ df = df.rename(columns={'description: content description':'description',
 frames = [df, sheet]
 result = pd.concat(frames)
 del result['Unnamed: 0']
+count = result['Subjects (topic) 2'].value_counts()
 result.to_csv('Combined.csv')
